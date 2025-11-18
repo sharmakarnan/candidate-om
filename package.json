@@ -2,7 +2,7 @@
   "name": "cms-fe",
   "private": true,
   "version": "0.0.0",
-  "homepage":"https://github.com/sharmakarnan/Candidate-OM",
+  "homepage":"https://sharmakarnan.github.io/Candidate-OM/",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
