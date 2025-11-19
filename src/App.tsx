@@ -1,80 +1,3 @@
-// import React, { useState } from "react";
-// import { BrowserRouter as Router, Routes, Route, Navigate, Link } from "react-router-dom";
-// import AdminAddCandidate from "./components/AdminAddCandidate";
-// import CandidateLogin from "./components/CandidateLogin";
-// import CandidateRegisterForm from "./components/CandidateRegisterForm";
-
-// interface CandidateData {
-//   id: number;
-//   username: string;
-//   candidate_email: string;
-// }
-
-// const App: React.FC = () => {
-//   const [loggedCandidate, setLoggedCandidate] = useState<CandidateData | null>(null);
-
-//   return (
-//     <Router>
-//       {/* ✅ Navbar */}
-//       <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm rounded px-4 py-2 mb-4 d-flex justify-content-between align-items-center">
-//         <Link to="/" className="navbar-brand fw-bold text-primary">
-//            Office Management
-//         </Link>
-
-//         <div className="d-flex gap-4">
-//           <Link to="/admin/add-candidate" className="nav-link text-secondary fw-medium">
-//              Admin Add
-//           </Link>
-//           <Link to="/candidate/login" className="nav-link text-secondary fw-medium">
-//              Candidate Login
-//           </Link>
-//         </div>
-//       </nav>
-
-//       {/* ✅ Routes */}
-//       <div className="container">
-//         <Routes>
-//           {/* Redirect root → Admin */}
-//           <Route path="/" element={<Navigate to="/admin/add-candidate" replace />} />
-
-//           {/* Admin Add Candidate */}
-//           <Route path="/admin/add-candidate" element={<AdminAddCandidate />} />
-
-//           {/* Candidate Login */}
-//           <Route
-//             path="/candidate/login"
-//             element={<CandidateLogin onLoginSuccess={setLoggedCandidate} />}
-//           />
-
-//           {/* Candidate Register */}
-//           <Route
-//             path="/candidate/register"
-//             element={
-//               loggedCandidate ? (
-//                 <CandidateRegisterForm candidate={loggedCandidate} />
-//               ) : (
-//                 <Navigate to="/candidate/login" replace />
-//               )
-//             }
-//           />
-
-//           {/* 404 Page */}
-//           <Route
-//             path="*"
-//             element={
-//               <div className="min-h-screen d-flex justify-content-center align-items-center text-center">
-//                 <h4 className="text-muted">🚫 404 — Page Not Found</h4>
-//               </div>
-//             }
-//           />
-//         </Routes>
-//       </div>
-//     </Router>
-//   );
-// };
-
-// export default App;
-
 import React, { useState } from "react";
 import {
   BrowserRouter as Router,
@@ -114,7 +37,7 @@ const App: React.FC = () => {
       <nav className="bg-white shadow-md border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <Link
-            to="/"
+            to="/Candidate-OM/"
             className="text-2xl font-bold text-green-700 hover:text-green-800 transition"
           >
             Office Management
@@ -163,7 +86,7 @@ const App: React.FC = () => {
         <Routes>
           {/* Default route */}
           <Route
-            path="/"
+            path="/Candidate-OM/"
             element={<Navigate to="/admin/add-candidate" replace />}
           />
 
