@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../services/api";   // ✅ FIXED
 
-// ⭐ Type for category counts
 interface CategoryCount {
   [key: string]: number;
 }
 
-// ⭐ Type for stats returned from backend
 interface StatsResponse {
   total: number;
   categoryCounts: CategoryCount;
@@ -26,10 +24,9 @@ const AdminTestGenerator: React.FC = () => {
     categoryCounts: {},
   });
 
-  // ⭐ Load total questions + category count safely
   useEffect(() => {
-    axios
-      .get("/api/questions/count")
+    api
+      .get("/api/questions/count")   // ✅ FIXED
       .then((res) => setStats(res.data))
       .catch((err) => console.log(err));
   }, []);
@@ -44,16 +41,11 @@ const AdminTestGenerator: React.FC = () => {
       spring: Number(counts.spring),
     };
 
-    const res = await axios.post(
-      "/api/questions/generate-test",
-      body
-    );
-
-    alert("✅ Test Generated Successfully!");
+    const res = await api.post("/api/questions/generate-test", body);   // ✅ FIXED
+    alert("Test Generated Successfully!");
     setGenerated(res.data.questions);
   };
 
-  // ⭐ Count generated test category-wise with proper typing
   const generatedCategoryCounts: CategoryCount = {};
   generated.forEach((q) => {
     if (!generatedCategoryCounts[q.category]) {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../services/api";   // 👈 FIXED
 
 interface Question {
   id: number;
@@ -23,9 +23,9 @@ const AdminQuestions: React.FC = () => {
     questionType: "theory",
   });
 
-  // Load All Questions
+  // Load Questions
   const fetchQuestions = async () => {
-    const res = await axios.get("/api/questions/view");
+    const res = await api.get("/api/questions/view");   // 👈 FIXED
     setQuestions(res.data);
   };
 
@@ -33,33 +33,13 @@ const AdminQuestions: React.FC = () => {
     fetchQuestions();
   }, []);
 
-  // Add Question Handler
+  // Add Question
   const handleAddQuestion = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!newQuestion.question.trim()) {
-      alert("Enter Question");
-      return;
-    }
+    await api.post("/api/questions/add", newQuestion);   // 👈 FIXED
 
-    if (newQuestion.questionType === "program" && !newQuestion.code.trim()) {
-      alert("Paste code for program question");
-      return;
-    }
-
-    if (newQuestion.options.some((o) => !o.trim())) {
-      alert("Please fill all 4 options");
-      return;
-    }
-
-    if (!newQuestion.correct.trim()) {
-      alert("Please select correct option");
-      return;
-    }
-
-    await axios.post("/api/questions/add", newQuestion);
-
-    alert("✅ Question Added");
+    alert("Question Added");
 
     setNewQuestion({
       question: "",
@@ -73,11 +53,11 @@ const AdminQuestions: React.FC = () => {
     fetchQuestions();
   };
 
-  // Delete
+  // Delete Question
   const handleDelete = async (id: number) => {
     if (!window.confirm("Delete this question?")) return;
 
-    await axios.delete(`/api/questions/delete/${id}`);
+    await api.delete(`/api/questions/delete/${id}`);   // 👈 FIXED
     fetchQuestions();
   };
 

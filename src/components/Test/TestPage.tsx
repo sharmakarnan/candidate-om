@@ -161,7 +161,7 @@
 
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import baseURL from "../../services/api"
+import api from "../../services/api";
 
 export default function TestPage() {
   const navigate = useNavigate();
@@ -231,11 +231,11 @@ export default function TestPage() {
     const activeTest = JSON.parse(localStorage.getItem("activeTest") || "null");
     if (!activeTest) return;
 
-    await fetch(`${baseURL}/api/tests/submit`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ test_id: activeTest.test_id, answers }),
-    });
+   await api.post("/api/tests/submit", {
+  test_id: activeTest.test_id,
+  answers,
+});
+
 
     localStorage.removeItem("activeTest");
     sessionStorage.removeItem("testQuestions");

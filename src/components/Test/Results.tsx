@@ -69,7 +69,7 @@
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import baseURL from "../../services/api"
+import api from "../../services/api";
 
 type TestResult = {
   test_id: number;
@@ -87,11 +87,11 @@ export default function Results() {
   const [toDate, setToDate] = useState("");
   const [minScore, setMinScore] = useState("");
 
-  useEffect(() => {
-    fetch(`${baseURL}/api/tests/results`)
-      .then((res) => res.json())
-      .then(setResults);
-  }, []);
+ useEffect(() => {
+  api.get("/api/tests/results")
+    .then((res) => setResults(res.data))
+    .catch(err => console.error("Error fetching results:", err));
+}, []);
 
   // -------------------------------
   // FILTER LOGIC

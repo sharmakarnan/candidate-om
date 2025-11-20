@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../services/api";
 
 interface Candidate {
   test_id: number;
@@ -15,12 +15,12 @@ const AdminOnboarding: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [sending, setSending] = useState<number | null>(null);
 
-  // ✅ Fetch passed candidates
+  // Fetch passed candidates
   useEffect(() => {
     const fetchPassedCandidates = async () => {
       try {
         setLoading(true);
-        const res = await axios.get("/api/onboarding/selected");
+        const res = await api.get("/api/onboarding/selected");   // ← FIXED
         setCandidates(res.data);
       } catch (err) {
         console.error("❌ Error fetching passed candidates:", err);
@@ -32,13 +32,13 @@ const AdminOnboarding: React.FC = () => {
     fetchPassedCandidates();
   }, []);
 
-  // ✅ Send onboarding email
+  // Send onboarding email
   const sendEmail = async (candidate: Candidate) => {
     if (!window.confirm(`Send onboarding email to ${candidate.name}?`)) return;
 
     try {
       setSending(candidate.candidate_id);
-      const res = await axios.post("/api/onboarding/send-email", {
+      const res = await api.post("/api/onboarding/send-email", {  // ← FIXED
         email: candidate.email,
         username: candidate.name,
       });
@@ -77,16 +77,11 @@ const AdminOnboarding: React.FC = () => {
             </thead>
             <tbody>
               {candidates.map((c, index) => (
-                <tr
-                  key={c.candidate_id}
-                  className="border-b hover:bg-green-50 transition duration-200"
-                >
+                <tr key={c.candidate_id} className="border-b hover:bg-green-50 transition duration-200">
                   <td className="py-3 px-4">{index + 1}</td>
                   <td className="py-3 px-4 font-medium text-gray-800">{c.name}</td>
                   <td className="py-3 px-4 text-gray-600">{c.email}</td>
-                  <td className="py-3 px-4 text-center font-semibold text-green-700">
-                    {c.score}
-                  </td>
+                  <td className="py-3 px-4 text-center font-semibold text-green-700">{c.score}</td>
                   <td className="py-3 px-4 text-center">
                     <button
                       onClick={() => sendEmail(c)}
